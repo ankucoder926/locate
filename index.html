@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js">
+    </script>
+
+</head>
+<body>
+    <h1>My location </h1>
+    <p id="p"></p>
+    <button onclick="locate()"> Click here to see your location</button>
+</body>
+</html>
+<script>
+    let p= document.getElementById("p");
+    function locate(){
+        if( navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(anku);
+        }
+        else {
+            alert("not supported");
+        }
+}
+function anku(s){
+    p.innerHTML= "latitude: " + s.coords.latitude +"<br>" + "Longitude: " + s.coords.longitude;
+ var l = "https://api.opencagedata.com/geocode/v1/json?q=" + s.coords.latitude+ "," + s.coords.longitude + "&key=87f70e732bbd44d984f351fc57d3e4cc";
+//  p.innerHTML=l
+// console.log($);
+$.get({
+    url: l,
+    success: function(e){
+console.log(e);
+p.innerHTML = "Country: " + e.results[0].components.country + "<br>";
+p.innerHTML += "City: " + e.results[0].components.city + "<br>";
+p.innerHTML += "State: " + e.results[0].components.state;
+
+    }
+})
+
+}
+</script>
